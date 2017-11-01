@@ -287,5 +287,5 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
-# Cake files
-tools/Cake
+# suppress Cake files
+tools
