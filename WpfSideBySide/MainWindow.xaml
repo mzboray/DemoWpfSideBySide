@@ -1,0 +1,41 @@
+﻿<Window x:Class="WpfSideBySide.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfSideBySide"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="600">
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="45" />
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchPath}" />
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <Button Command="{Binding LoadCommand}" CommandParameter="{Binding SearchPath}">Load</Button>
+        </StackPanel>
+        <DataGrid Name="grid" Grid.Row="1" Grid.ColumnSpan="2" 
+                  ItemsSource="{Binding LoadedAssemblies}" AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectedItem="{Binding SelectedPlugIn}" SelectionChanged="DataGrid_SelectionChanged"
+                  SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding AssemblyName}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding AssemblyVersion}" Header="Version" />
+                <DataGridTextColumn Binding="{Binding PublicKeyToken}" Header="Public key" />
+                <DataGridTextColumn Binding="{Binding PlugInName}" Header="PlugIn" />
+                <DataGridTextColumn Binding="{Binding Path}" Header="Path" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <ContentControl Grid.Row="2" Grid.ColumnSpan="2" Content="{Binding Content}">
+        </ContentControl>
+    </Grid>
+</Window>
